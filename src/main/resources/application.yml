@@ -1,0 +1,63 @@
+upload:
+  path: ${UPLOAD_PATH:static}
+
+spring:
+  jpa:
+    hibernate:
+      dialect: org.hibernate.dialect.PostgreSQL95Dialect
+      jdbc:
+        time_zone: ${TZ:Europe/Moscow}
+      ddl-auto: ${SCHEMA_INIT:validate}
+    generate-ddl: false
+    show-sql: false
+  datasource:
+#    url: ${SPRING_DATASOURCE_URL:localhost}
+#    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+#    password: ${SPRING_DATASOURCE_PASSWORD:0000}
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_DB:delivery}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASS:0000}
+  redis:
+    host: ${REDIS_HOST:localhost}
+    port: ${REDIS_PORT:6379}
+    password: ${REDIS_PASS}
+  session:
+    store-type: redis
+    redis:
+      flush-mode: on_save
+      namespace: "spring:session"
+#    jdbc:
+#      initialize-schema: always
+#      table-name: spring_session
+  data:
+    mongodb:
+      host: ${MONGO_HOST:localhost}
+      port: ${MONGO_PORT:27017}
+      database: ${MONGO_DB:mongo}
+      password: ${MONGO_PASS}
+      username: ${MONGO_USER:root}
+  servlet:
+    multipart:
+      max-file-size: 256MB
+      max-request-size: 256MB
+      enabled: true
+  freemarker:
+    expose-request-attributes: true
+  mail:
+    active_url: ${ACTIVE_URL:http://localhost:8080}
+    protocol: smtp
+    host: smtp.gmail.com
+    port: 587
+    username: ${EMAIL:test@mail.ru}
+    #env variable
+    password: ${EMAIL_PASSWORD:0000}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+recaptcha:
+  server_secret: ${SERVER_CAPTCHA_SECRET}
+  client_secret: ${CLIENT_CAPTCHA_SECRET}
